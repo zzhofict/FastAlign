@@ -45,22 +45,34 @@ make
 ## 📖 Usage
 BWA-FastAlign follows the same command-line interface as BWA-MEM.
 
-1.  **Index the Reference.** Before alignment, you must index your reference genome (e.g., human_g1k_v37.fasta).
+0.  **Download Datasets.** We download E.coli reference genome and sequencing reads.
 ```bash
-# This will generate the Hybrid Index files
+# Download reference genome
+wget http://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/005/845/GCA_000005845.2_ASM584v2/GCA_000005845.2_ASM584v2_genomic.fna.gz
+gzip -d GCA_000005845.2_ASM584v2_genomic.fna.gz
+mv GCA_000005845.2_ASM584v2_genomic.fna ref.fasta
+
+# Download sequencing reads
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_1.fastq.gz -O reads_1.fq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_2.fastq.gz -O reads_2.fq.gz
+```
+
+1.  **Index the Reference.** Before alignment, you must index your reference genome.
+```bash
+# This will generate the hybrid index files
 ./fastalign index ref.fa
 ```
 
 2.  **Align Reads (Mem).** Map single-end or paired-end reads to the reference.
 ```bash
 # Single-end alignment
-./fastalign mem ref.fa reads.fq > aln.sam
+./fastalign mem ref.fa reads.fq.gz > aln.sam
 
 # Paired-end alignment
-./fastalign mem ref.fa read1.fq read2.fq > aln.sam
+./fastalign mem ref.fa read1.fq.gz read2.fq.gz > aln.sam
 
 # Using multiple threads (Recommended: 32-128 threads for high throughput)
-./fastalign mem -t 64 ref.fa read1.fq read2.fq > aln.sam
+./fastalign mem -t 64 ref.fa read1.fq.gz read2.fq.gz > aln.sam
 ```
 
 3.  **Options.** BWA-FastAlign supports the standard BWA-MEM options. Run ./fastalign mem to see the full list.
