@@ -66,13 +66,13 @@ wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_2.fastq
 2.  **Align Reads (Mem).** Map single-end or paired-end reads to the reference.
 ```bash
 # Single-end alignment
-./fastalign mem ref.fa reads.fq.gz > aln.sam
+./fastalign mem ref.fasta reads_1.fq.gz > aln.sam
 
 # Paired-end alignment
-./fastalign mem ref.fa read1.fq.gz read2.fq.gz > aln.sam
+./fastalign mem ref.fasta reads_1.fq.gz reads_2.fq.gz > aln.sam
 
 # Using multiple threads (Recommended: 32-128 threads for high throughput)
-./fastalign mem -t 64 ref.fa read1.fq.gz read2.fq.gz > aln.sam
+./fastalign mem -t 64 ref.fasta reads_1.fq.gz reads_2.fq.gz > aln.sam
 ```
 
 3.  **Options.** BWA-FastAlign supports the standard BWA-MEM options. Run ./fastalign mem to see the full list.
